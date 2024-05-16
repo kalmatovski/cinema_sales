@@ -12,6 +12,7 @@ const HomePage = () => {
   const router = useRouter();
   const [isLogged, setIsLogged] = useState(false);
   const [movies, setMovies] = useState([]);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     getData();
@@ -78,9 +79,11 @@ const HomePage = () => {
                 Tickets: {movie.ticket_available}
               </span>
             </div>
-            <button className="mt-4 bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
-              Book Now
-            </button>
+            {isLogged ? (
+              <button className="mt-4 bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
+                Book Now
+              </button>
+            ) : null}
           </div>
         ))}
       </main>
