@@ -1,8 +1,13 @@
 "use client";
-import React from "react";
+import { setItem, userCheck } from "@/service/helpers";
+import { signIn } from "@/service/service";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
+  const router = useRouter();
+  const [err, setErr] = useState(false);
   const {
     register,
     handleSubmit,
@@ -10,10 +15,26 @@ const Login = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Handle login logic here
-    reset(); // Reset the form after submission
+  useEffect(() => {
+    if (userCheck()) {
+      router.push("/");
+    }
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await signIn(data);
+      if (res.success) {
+        router.push("/");
+      } else {
+        alert(res.error.error);
+      }
+    } catch (error) {
+      console.log("Error signing in:", error.message);
+    } finally {
+      reset();
+      setItem(data);
+    }
   };
 
   return (

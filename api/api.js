@@ -1,1 +1,1 @@
-const main_url = ''
+export const main_url = 'https://akbar.pythonanywhere.com'

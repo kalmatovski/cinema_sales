@@ -16,6 +16,11 @@ export const userCheck = () => {
     return false
 }
 
+export const signOut = () => {
+    localStorage.removeItem("USERNAME")
+    localStorage.removeItem("PASSWORD")
+}
+
 
 export const adminCheck = () => {
     const keyWord = localStorage.getItem("ADMINKEY")

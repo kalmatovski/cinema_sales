@@ -1,9 +1,14 @@
 "use client";
 
-import React from "react";
+import { setItem, userCheck } from "@/service/helpers";
+import { addUser } from "@/service/service";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const SignUp = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -11,10 +16,20 @@ const SignUp = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Handle signup logic here
-    reset(); // Reset the form after submission
+  useEffect(() => {
+    if (userCheck()) {
+      router.push("/");
+    }
+  });
+  const onSubmit = async (data) => {
+    try {
+      const res = await addUser(data);
+      setItem(data);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      router.push("/");
+    }
   };
 
   return (
