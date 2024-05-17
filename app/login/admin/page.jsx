@@ -42,7 +42,7 @@ const AdminLogin = () => {
               htmlFor="password"
               className="block text-gray-700 font-medium mb-2"
             >
-              Admin Keyword
+              Admin Keyword is ait23
             </label>
             <input
               id="password"
