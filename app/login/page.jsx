@@ -1,6 +1,7 @@
 "use client";
 import { setItem, userCheck } from "@/service/helpers";
 import { signIn } from "@/service/service";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -84,12 +85,22 @@ const Login = () => {
               </p>
             )}
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
-          >
-            Login
-          </button>
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="w-1/3 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
+            >
+              Login
+            </button>
+            <Link href="/login/admin" className="w-1/3">
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
+              >
+                Admin
+              </button>
+            </Link>
+          </div>
         </form>
       </div>
     </div>

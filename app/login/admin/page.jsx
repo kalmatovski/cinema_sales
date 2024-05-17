@@ -1,9 +1,14 @@
 "use client";
 
+import { main_url } from "@/api/api";
+import { setKeyword } from "@/service/helpers";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
 const AdminLogin = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -11,9 +16,19 @@ const AdminLogin = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Handle admin login logic here
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.get(
+        `${main_url}/verify_admin?password=${data.password}`
+      );
+      if (res.status === 200) {
+        setKeyword(data.password);
+        router.push("/");
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+
     reset(); // Reset the form after submission
   };
 
@@ -24,24 +39,24 @@ const AdminLogin = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label
-              htmlFor="adminKeyword"
+              htmlFor="password"
               className="block text-gray-700 font-medium mb-2"
             >
               Admin Keyword
             </label>
             <input
-              id="adminKeyword"
-              type="text"
+              id="password"
+              type="password"
               className={`w-full p-2 border rounded ${
-                errors.adminKeyword ? "border-red-500" : "border-gray-300"
+                errors.password ? "border-red-500" : "border-gray-300"
               }`}
-              {...register("adminKeyword", {
+              {...register("password", {
                 required: "Admin keyword is required",
               })}
             />
-            {errors.adminKeyword && (
+            {errors.password && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.adminKeyword.message}
+                {errors.password.message}
               </p>
             )}
           </div>

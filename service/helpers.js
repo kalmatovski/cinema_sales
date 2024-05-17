@@ -19,6 +19,7 @@ export const userCheck = () => {
 export const signOut = () => {
     localStorage.removeItem("USERNAME")
     localStorage.removeItem("PASSWORD")
+    localStorage.removeItem("ADMINKEY")
 }
 
 
